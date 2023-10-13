@@ -9,10 +9,12 @@ import {
 import { getEmbeddings } from "./embeddings";
 import { convertToAscii } from "./utils";
 
+
+
 export const getPineconeClient = () => {
   return new Pinecone({
-    environment: process.env.PINECONE_ENVIRONMENT!,
-    apiKey: process.env.PINECONE_API_KEY!,
+    environment: "us-east1-gcp",      
+    apiKey: "84cef4db-2780-44fa-ac4f-e4c68e333546",
   });
 };
 
@@ -42,7 +44,7 @@ export async function loadS3IntoPinecone(fileKey: string) {
 
   // 4. upload to pinecone
   const client = await getPineconeClient();
-  const pineconeIndex = await client.index("chatpdf");
+  const pineconeIndex = await client.index("test");
   const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
 
   console.log("inserting vectors into pinecone");
@@ -78,7 +80,7 @@ export const truncateStringByBytes = (str: string, bytes: number) => {
 async function prepareDocument(page: PDFPage) {
   let { pageContent, metadata } = page;
   pageContent = pageContent.replace(/\n/g, "");
-  // split the docs
+  // split the docs (read langchain docs for different chunking technique sthat wilol give better results)
   const splitter = new RecursiveCharacterTextSplitter();
   const docs = await splitter.splitDocuments([
     new Document({

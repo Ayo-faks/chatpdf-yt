@@ -42,9 +42,9 @@ export async function GET() {
       line_items: [
         {
           price_data: {
-            currency: "USD",
+            currency: "GBP",
             product_data: {
-              name: "ChatPDF Pro",
+              name: "Insight Pro",
               description: "Unlimited PDF sessions!",
             },
             unit_amount: 2000,
